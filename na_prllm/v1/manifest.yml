@@ -1,0 +1,23 @@
+manifest_version: 1
+version:
+  name: V1
+  label: "First Version"
+
+artifacts:
+  readme: readme.md
+  setup_script: setup.sql
+
+configuration:
+  log_level: INFO
+
+references:
+  - EGRESS_EAI_PRLLM:
+      label: "Egress External Access Integration for hosted LLM"
+      description: "EAI for Egress for prllm() function"
+      privileges: 
+        - USAGE
+      object_type: EXTERNAL_ACCESS_INTEGRATION
+      multi_valued: false
+      register_callback: config.reference_callback
+      configuration_callback: config.configuration_callback
+      required_at_setup: true

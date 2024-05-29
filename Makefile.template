@@ -1,0 +1,25 @@
+SNOWFLAKE_REPO?=<<respository_url>>
+LLM_IMAGE=llm
+API_IMAGE=udf-flask
+
+help:          ## Show this help.
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+
+all: login build_llm push_llm build_api push_api
+
+login:         ## Login to Snowflake Docker repo
+	docker login $(SNOWFLAKE_REPO)
+
+build_llm:     ## Build Docker image for Snowpark Container Services for LLM
+	cd llm/LLM && docker build --platform linux/amd64 -t $(DOCKER_IMAGE) . && cd ../..
+
+push_llm:      ## Push Docker image to Snowpark Container Services for LLM
+	docker tag $(DOCKER_IMAGE) $(SNOWFLAKE_REPO)/$(DOCKER_IMAGE)
+	docker push $(SNOWFLAKE_REPO)/$(DOCKER_IMAGE)
+
+build_api:     ## Build Docker image for Snowpark Container Services for API
+	cd llm/api && docker build --platform linux/amd64 -t $(DOCKER_IMAGE) . && cd ../..
+
+push_api:      ## Push Docker image to Snowpark Container Services for
+	docker tag $(DOCKER_IMAGE) $(SNOWFLAKE_REPO)/$(DOCKER_IMAGE)
+	docker push $(SNOWFLAKE_REPO)/$(DOCKER_IMAGE)
