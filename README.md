@@ -193,7 +193,7 @@ In the following SQL, replace
 * `SNOWFLAKE_IDENTIFIER` with your Snowflake account identifier (e.g, `abc12345`)
 * `PRLLM_USER` with the username you created above
 * `PRLLM_PASSWORD` with the password for the user you created above
-* `INGRESS_URL` with the ingress URL for your LLM service from above
+* `INGRESS_URL` - take the hostname of ingress URL for your LLM service from above, and prepend with `wss://` instead of `https://`, and add the suffix `/ws` (e.g., `wss://zyxwvuts-abc12345.snowflakecomputing.app/ws`)
 
 ```sql
 USE ROLE nap_role;

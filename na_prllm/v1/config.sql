@@ -110,7 +110,7 @@ CREATE OR REPLACE PROCEDURE config.create_function_prllm()
             RETURNS STRING
             LANGUAGE PYTHON
             RUNTIME_VERSION = ''3.10''
-            PACKAGES = (''requests'')
+            PACKAGES = (''requests'', ''websockets'')
             HANDLER = ''prllm.prllm''
             IMPORTS = ( ''/prllm.py'' )
             EXTERNAL_ACCESS_INTEGRATIONS = ( Reference(''EGRESS_EAI_PRLLM'') )'
@@ -167,7 +167,7 @@ CREATE OR REPLACE PROCEDURE config.create_function_prllm_with_eai(eai STRING)
             RETURNS STRING
             LANGUAGE PYTHON
             RUNTIME_VERSION = ''3.10''
-            PACKAGES = (''requests'')
+            PACKAGES = (''requests'', ''websockets'')
             HANDLER = ''prllm.prllm''
             IMPORTS = ( ''/prllm.py'' )
             EXTERNAL_ACCESS_INTEGRATIONS = ( ' || UPPER(eai) || ' )'

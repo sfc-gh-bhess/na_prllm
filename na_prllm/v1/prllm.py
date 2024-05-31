@@ -1,5 +1,7 @@
 import requests
 import json
+import asyncio
+import websockets
 
 # For now - get session token every request
 def session_token(SNOWFLAKE_HOST, SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PASSWORD):
@@ -33,14 +35,16 @@ def session_token(SNOWFLAKE_HOST, SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_P
     resp = requests.post(url, data=json.dumps(data), headers=headers)
     return resp.json()['data']['sessionToken']
 
+async def ws_prllm(prompt, uri, headers):
+    async with websockets.connect(uri, extra_headers=headers) as websocket:
+        await websocket.send(prompt)
+        response = await websocket.recv()
+        return response
+
 def prllm(prompt, host, account, user, password, api_url):
     token = session_token(host, account, user, password)
     url = f"{api_url}/" ## for now
     headers = {
-        'Content-Type': 'application/json',
         'Authorization': f'Snowflake Token="{token}"'
     }
-    resp = requests.post(url, headers=headers, data=json.dumps({"data": [ [0, prompt ]]}))
-    retval = resp.json()['data'][0][1]
-    # retval = resp.text
-    return retval
+    return asyncio.run(ws_prllm(prompt, url, headers))
