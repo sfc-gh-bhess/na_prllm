@@ -43,6 +43,8 @@ html = """
             <button>Send</button>
         </form>
         <ul id='messages'>
+            <li><span id='prompt'></span></li>
+            <li><span style="color:blue" id='response'></span></li>
         </ul>
         <script>
             var loc = window.location, new_uri;
@@ -52,17 +54,15 @@ html = """
                 new_uri = "ws:";
             }
             new_uri += "//" + loc.host + "/ws"
-            //var ws = new WebSocket("ws://localhost:8000/ws");
             var ws = new WebSocket(new_uri);
             ws.onmessage = function(event) {
-                var messages = document.getElementById('messages')
-                var message = document.createElement('li')
-                var content = document.createTextNode(event.data)
-                message.appendChild(content)
-                messages.appendChild(message)
+                var response = document.getElementById('response')
+                response.textContent = event.data
             };
             function sendMessage(event) {
                 var input = document.getElementById("messageText")
+                var prompt = document.getElementById('prompt')
+                prompt.textContent = input.value
                 ws.send(input.value)
                 input.value = ''
                 event.preventDefault()
