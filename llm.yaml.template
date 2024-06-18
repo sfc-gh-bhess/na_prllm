@@ -29,3 +29,7 @@ spec:
   volumes:
     - name: models
       source: "@<<database>>.<<schema>>.models"
+serviceRoles:
+- name: api
+  endpoints:
+  - chat

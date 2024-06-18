@@ -19,19 +19,6 @@ CREATE SECURITY INTEGRATION IF NOT EXISTS snowservices_ingress_oauth
   ENABLED=true;
 ```
 
-
-
-
-
-INSERT INTO na_prllm_pkg.shared_data.prllm_creds 
-    SELECT  'https://tmb98077.snowflakecomputing.com' AS host, 
-            'tmb98077' AS account, 
-            'prllm_user' AS user, 
-            'Prllm123!' AS password,
-            'https://gl5qobgv-sfsenorthamerica-bmh-prod3.snowflakecomputing.app' AS api_url,
-            current_account() AS current_account;
-
-
 ### Provider Setup
 Before we proceed, you will need to get a HuggingFace API key.
 See the HuggingFace documentarion for details.
