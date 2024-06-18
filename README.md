@@ -112,7 +112,7 @@ CREATE SERVICE spcs.napp.llama_2
     SPECIFICATION_FILE='llm.yaml'
     EXTERNAL_ACCESS_INTEGRATIONS = ( HF_ACCESS_INTEGRATION );
 
-GRANT USAGE ON SERVICE spcs.napp.llama TO ROLE prllm;
+GRANT SERVICE ROLE spcs.napp.llama_2!api TO ROLE prllm;
 ```
 
 To allow users to use the service, we can GRANT the role `prllm` 
